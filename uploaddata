@@ -1,0 +1,32 @@
+from tensorflow.keras.models import load_model
+from tensorflow.keras.utils import load_img, img_to_array
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+
+model_path = "/content/model3.h5"
+
+model = load_model(model_path)
+print(" Load model thành công!")
+
+
+train_dir = "/content/drive/MyDrive/hoa"
+
+
+datagen = ImageDataGenerator(rescale=1./255)
+
+dummy_generator = datagen.flow_from_directory(
+    train_dir,
+    target_size=(200, 200),
+    batch_size=32,
+    class_mode='categorical',
+    shuffle=False,
+    subset='training'
+)
+
+
+class_labels = {v: k for k, v in dummy_generator.class_indices.items()}
+
+print("Số lớp:", len(class_labels))
