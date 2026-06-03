@@ -1,0 +1,17 @@
+
+image_path = "/content/hoa sen.jpg"
+
+img = load_img(image_path, target_size=(200, 200))
+plt.imshow(img)
+plt.axis('off')
+plt.show()
+
+img_array = img_to_array(img) / 255.0
+img_array = np.expand_dims(img_array, axis=0)
+
+prediction = model.predict(img_array, verbose=0)
+predicted_idx = np.argmax(prediction)
+confidence = np.max(prediction) * 100
+
+print(f" Predicted Emoji: {class_labels[predicted_idx]}")
+print(f" Confidence: {confidence:.2f}%")
